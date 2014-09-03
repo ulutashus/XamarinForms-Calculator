@@ -1,0 +1,7 @@
+*.txt
+Calculator.XForm/Calculator.Android/obj/
+Calculator.XForm/Calculator.Android/bin/
+Calculator.XForm/Calculator/bin/
+Calculator.XForm/Calculator.iOS/bin/
+Calculator.XForm/Calculator/obj/
+Calculator.XForm/Calculator.iOS/obj/
