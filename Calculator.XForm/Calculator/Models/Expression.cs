@@ -10,7 +10,6 @@ namespace Calculator.Models
     {
         private LinkedList<string> tokens;
         private Status status;
-        private const string Ops = "+/*-^";
 
         public Expression()
         {
@@ -35,44 +34,64 @@ namespace Calculator.Models
 
         public void Append(string par)
         {
-            if (tokens.Count == 0)
-                tokens.AddLast("");
+            Operator currentOp = Functions.GetOperator(par);
+            Operator lastOp = Functions.GetOperator(tokens.LastOrDefault());
 
             switch (status)
             {
                 case Status.Num:
-                    if (Ops.Contains(par))
+                    if (currentOp != null)                  /* Num + Op  */
                     {
+                        if (tokens.LastOrDefault() != null &&
+                            currentOp.Type == TermType.RightMono)
+                        {
+                            tokens.AddLast(Functions.Multiply);
+                        }
                         tokens.AddLast(par);
                         status = Status.Op;
                     }
-                    else if (par == Functions.Dot)
+                    else                                    
                     {
+                        if (tokens.Count == 0)              /* _ + All   */
+                            tokens.AddLast("");
+
                         string last = tokens.Last();
-                        if (!last.Contains(Functions.Dot))
+                        if (par == Functions.Dot)           /* Num + Dot */
                         {
-                            if (last.Length == 0)
-                                last += "0";
-                            last += Functions.Dot;
-                            tokens.Last.Value = last;
+                            if (!last.Contains(Functions.Dot))
+                            {
+                                if (last.Length == 0)
+                                    tokens.Last.Value += "0";
+                                tokens.Last.Value += Functions.Dot;
+                            }
                         }
-                    }
-                    else
-                    {
-                        string last = tokens.Last();
-                        if (par != "0")
-                            tokens.Last.Value += par;
-                        else if (last.Length > 0 && last[0] != '0')
-                            tokens.Last.Value += par;
+                        else                                /* Num + Num */
+                        {
+                            if (par != "0")
+                                tokens.Last.Value += par;
+                            else if (last.Length > 0 && last[0] != '0')
+                                tokens.Last.Value += par;
+                        }
                     }
                     break;
 
                 case Status.Op:
-                    if (Ops.Contains(par))
+                    if (currentOp != null)                  /* Op + Op   */
                     {
-                        tokens.Last.Value = par;
+                        
+                        if (currentOp.CanComeAfter(lastOp))
+                        {
+                            if (lastOp.Type == TermType.None &&
+                                currentOp.Type == TermType.RightMono)
+                            {
+                                tokens.AddLast(Functions.Multiply);
+                            }
+                            tokens.AddLast(par);
+                        }
+                        else if (currentOp.Type == lastOp.Type)
+                            tokens.Last.Value = par;
                     }
-                    else if (par != Functions.Dot)
+                    else if (par != Functions.Dot)          /* Op + Num  */
                     {
                         tokens.AddLast(par);
                         status = Status.Num;
@@ -92,13 +111,20 @@ namespace Calculator.Models
             string last = tokens.Last();
             if(!String.IsNullOrEmpty(last))
             {
-                string newLast = last.Substring(0, last.Length - 1);
-                if (newLast.Length == 0)
+                if (status == Status.Op)
+                {
                     tokens.RemoveLast();
+                }
                 else
-                    tokens.Last.Value = newLast;
-                status = (tokens.Count > 0 && Ops.Contains(tokens.Last())) ? 
-                    Status.Op : Status.Num;
+                {
+                    string newLast = last.Substring(0, last.Length - 1);
+                    if (newLast.Length == 0)
+                        tokens.RemoveLast();
+                    else
+                        tokens.Last.Value = newLast;
+                }
+                status = tokens.Count > 0 && Functions.IsOperator(tokens.Last()) ? 
+                        Status.Op : Status.Num;
             }
         }
 

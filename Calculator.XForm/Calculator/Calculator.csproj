@@ -34,10 +34,13 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="App.cs" />
+    <Compile Include="Models\Function.cs" />
     <Compile Include="Models\Functions.cs" />
     <Compile Include="Models\Expression.cs" />
     <Compile Include="Models\InfixToPostfix.cs" />
     <Compile Include="Models\Evaluator.cs" />
+    <Compile Include="Models\Operations.cs" />
+    <Compile Include="Models\Operator.cs" />
     <Compile Include="ViewModels\CalculatorVModel.cs" />
     <Compile Include="ViewModels\Helpers\CommandList.cs" />
     <Compile Include="ViewModels\Helpers\DelegateCommand.cs" />
@@ -64,6 +67,11 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="functions.xml">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <Import Project="..\..\packages\Xamarin.Forms.1.2.2.6243\build\portable-win+net45+wp80+MonoAndroid10+MonoTouch10\Xamarin.Forms.targets" Condition="Exists('..\..\packages\Xamarin.Forms.1.2.2.6243\build\portable-win+net45+wp80+MonoAndroid10+MonoTouch10\Xamarin.Forms.targets')" />

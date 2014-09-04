@@ -6,26 +6,21 @@ using System.Threading.Tasks;
 
 namespace Calculator.Models
 {
-    public static class Evaluator
+    public class Evaluator
     {
-        // A list of operators.
-        private static String OPERATORS = "+-*/";
         // The operand stack.
-        private static Stack<double> operandStack;
+        private Stack<double> operandStack;
+        private ResultStatus status;
+        private double result;
 
-        public static double Evaluate(Expression expression)
+        public double Evaluate(Expression expression)
         {
             Expression postfix = InfixToPostfix.Convert(expression);
-            ResultStatus status;
-            return EvalPostfix(postfix, out status);
+            result = EvalPostfix(postfix, out status);
+            return result;
         }
 
-        /** Evaluates a postfix expression.
-            @param expression The expression to be evaluated
-            @return The value of the expression
-            @throws SyntaxErrorException if a syntax error is detected
-         */
-        private static double EvalPostfix(Expression expression, out ResultStatus resultStatus)
+        private double EvalPostfix(Expression expression, out ResultStatus resultStatus)
         {
             double result = 0;
             // Create an empty stack.
@@ -44,11 +39,10 @@ namespace Calculator.Models
                         // Push value onto operand stack.
                         operandStack.Push(value);
                     } // Is it an operator?
-                    else if (IsOperator(nextToken[0]))
+                    else if (Functions.IsOperator(nextToken))
                     {
                         // Evaluate the operator.
-                        result = operandStack.Peek();
-                        double res = EvalOp(nextToken[0]);
+                        double res = EvalOp(Functions.GetOperator(nextToken));
                         // Push result onto the operand stack.
                         operandStack.Push(res);
                     }
@@ -81,52 +75,32 @@ namespace Calculator.Models
             return result;
         }
 
-        /** Evaluates the current operation.
-            This function pops the two operands off the operand
-            stack and applies the operator.
-            @param op A character representing the operator
-            @return The result of applying the operator
-            @throws EmptyStackException if pop is attempted on
-                    an empty stack
-         */
-        private static double EvalOp(char op)
+        private double EvalOp(Operator op)
         {
             // Pop the two operands off the stack.
-            double rhs = operandStack.Pop();
-            double lhs = operandStack.Pop();
-            double result = 0;
+            double rhs = op.Type != TermType.None ?
+                operandStack.Pop() : 0;
+            double lhs = op.Type == TermType.Biominal ?
+                operandStack.Pop() : 0;
             // Evaluate the operator.
-            switch (op)
-            {
-                case '+':
-                    result = lhs + rhs;
-                    break;
-                case '-':
-                    result = lhs - rhs;
-                    break;
-                case '/':
-                    result = lhs / rhs;
-                    break;
-                case '*':
-                    result = lhs * rhs;
-                    break;
-
-            }
-            return result;
+            return op.Operation != null ? op.Operation(lhs, rhs) : 0;
         }
 
-        /** Determines whether a character is an operator.
-            @param op The character to be tested
-            @return true if the character is an operator
-         */
-        private static bool IsOperator(char ch)
+        #region Properties
+        public double Result
         {
-            return OPERATORS.Contains(ch.ToString());
+            get { return result; }
         }
 
-        private enum ResultStatus
+        public ResultStatus Status
         {
-            Success, InvalidChar, Incomplete, Lack, Slack
+            get { return status; }
         }
+        #endregion
+    }
+
+    public enum ResultStatus
+    {
+        Success, InvalidChar, Incomplete, Lack, Slack
     }
 }

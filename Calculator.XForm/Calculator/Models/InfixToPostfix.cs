@@ -9,47 +9,43 @@ namespace Calculator.Models
     public static class InfixToPostfix
     {
         // The operator stack
-        private static Stack<char> operatorStack;
-        // The operators
-        private static String OPERATORS = "+-*/()";
+        private static Stack<Operator> operatorStack;
         // The precedence of the operators, matches order of OPERATORS.
-        private static int[] PRECEDENCE = { 1, 1, 2, 2, -1, -1 };
         // The postfix string
         private static Expression postfix;
 
         public static Expression Convert(Expression infix)
         {
-            operatorStack = new Stack<char>();
+            operatorStack = new Stack<Operator>();
             postfix = new Expression();
             try
             {
                 // Process each token in the infix string.
                 foreach (string nextToken in infix.Tokens)
                 {
-                    char firstChar = nextToken[0];
                     // Is it an operand?
-                    if (Char.IsDigit(firstChar))
+                    if (Char.IsDigit(nextToken[0]))
                     {
                         postfix.AddToken(nextToken);
                     } // Is it an operator?
-                    else if (IsOperator(firstChar))
+                    else if (Functions.IsOperator(nextToken))
                     {
-                        ProcessOperator(firstChar);
+                        ProcessOperator(Functions.GetOperator(nextToken));
                     }
                     else
                     {
                         throw new Exception("Unexpected Character Encountered: "
-                             + firstChar);
+                             + nextToken);
                     }
                 } 
                 // Pop any remaining operators
                 // and append them to postfix.
                 while (operatorStack.Count != 0)
                 {
-                    char op = operatorStack.Pop();
+                    Operator op = operatorStack.Pop();
                     // Any '(' on the stack is not matched.
-                    if (op == '(')
-                        throw new Exception("Unmatched opening parenthesis");
+                    //if (op.Value == Functions.BracketOne)
+                    //    throw new Exception("Unmatched opening parenthesis");
                     postfix.AddToken(op);
                 }
                 // assert: Stack is empty, return result.
@@ -61,9 +57,9 @@ namespace Calculator.Models
             }
         }
 
-        private static void ProcessOperator(char op)
+        private static void ProcessOperator(Operator op)
         {
-            if (operatorStack.Count == 0 || op == '(')
+            if (operatorStack.Count == 0 || op.Value == Functions.BracketOne)
             {
                 operatorStack.Push(op);
             }
@@ -71,8 +67,8 @@ namespace Calculator.Models
             {
                 // Peek the operator stack and
                 // let topOp be the top operator.
-                char topOp = operatorStack.Peek();
-                if (Precedence(op) > Precedence(topOp))
+                Operator topOp = operatorStack.Peek();
+                if (op.Precedence > topOp.Precedence)
                 {
                     operatorStack.Push(op);
                 }
@@ -81,10 +77,10 @@ namespace Calculator.Models
                     // Pop all stacked operators with equal
                     // or higher precedence than op.
                     while (operatorStack.Count != 0
-                           && Precedence(op) <= Precedence(topOp))
+                           && op.Precedence <= topOp.Precedence)
                     {
                         operatorStack.Pop();
-                        if (topOp == '(')
+                        if (topOp.Value == Functions.BracketOne)
                         {
                             // Matching '(' popped - exit loop.
                             break;
@@ -100,20 +96,10 @@ namespace Calculator.Models
                     // assert: Operator stack is empty or
                     //         current operator precedence >
                     //         top of stack operator precedence.
-                    if (op != ')')
+                    if (op.Value != Functions.BracketTwo)
                         operatorStack.Push(op);
                 }
             }
-        }
-
-        private static bool IsOperator(char ch)
-        {
-            return OPERATORS.Contains(ch.ToString());
-        }
-
-        private static int Precedence(char op)
-        {
-            return PRECEDENCE[OPERATORS.IndexOf(op)];
         }
     }
 }

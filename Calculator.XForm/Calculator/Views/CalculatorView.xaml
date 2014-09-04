@@ -32,29 +32,39 @@
                 <ColumnDefinition Width="*"></ColumnDefinition>
                 <ColumnDefinition Width="*"></ColumnDefinition>
             </Grid.ColumnDefinitions>
-            <!--Row 0-->
-            <Button Grid.Row="0" Grid.Column="0" Text=""></Button>
+            <!-- Common -->
+            <Button Grid.Row="0" Grid.Column="0" Command="{Binding Commands[SWITCH]}" Text="..." />
             <Button Grid.Row="0" Grid.Column="1" Command="{Binding Commands[NUM]}" CommandParameter="{x:Static my:Functions.Division}" Text="{x:Static my:Functions.Division}" />
             <Button Grid.Row="0" Grid.Column="2" Command="{Binding Commands[NUM]}" CommandParameter="{x:Static my:Functions.Multiply}" Text="{x:Static my:Functions.Multiply}" />
             <Button Grid.Row="0" Grid.Column="3" Command="{Binding Commands[NUM]}" CommandParameter="{x:Static my:Functions.Subtraction}" Text="{x:Static my:Functions.Subtraction}" />
-            <!--Row 1-->
-            <Button Grid.Row="1" Grid.Column="0" Command="{Binding Commands[NUM]}" CommandParameter="7" Text="7" />
-            <Button Grid.Row="1" Grid.Column="1" Command="{Binding Commands[NUM]}" CommandParameter="8" Text="8" />
-            <Button Grid.Row="1" Grid.Column="2" Command="{Binding Commands[NUM]}" CommandParameter="9" Text="9" />
             <Button Grid.Row="1" Grid.Column="3" Grid.RowSpan="2" Command="{Binding Commands[NUM]}" CommandParameter="{x:Static my:Functions.Addition}" Text="{x:Static my:Functions.Addition}" />
-            <!--Row 2-->
-            <Button Grid.Row="2" Grid.Column="0" Command="{Binding Commands[NUM]}" CommandParameter="4" Text="4" />
-            <Button Grid.Row="2" Grid.Column="1" Command="{Binding Commands[NUM]}" CommandParameter="5" Text="5" />
-            <Button Grid.Row="2" Grid.Column="2" Command="{Binding Commands[NUM]}" CommandParameter="6" Text="6" />
-            <!--Row 3-->
-            <Button Grid.Row="3" Grid.Column="0" Command="{Binding Commands[NUM]}" CommandParameter="1" Text="1" />
-            <Button Grid.Row="3" Grid.Column="1" Command="{Binding Commands[NUM]}" CommandParameter="2" Text="2" />
-            <Button Grid.Row="3" Grid.Column="2" Command="{Binding Commands[NUM]}" CommandParameter="3" Text="3" />
             <Button Grid.Row="3" Grid.Column="3" Grid.RowSpan="2" Command="{Binding Commands[NUM]}" CommandParameter="{x:Static my:Functions.Equal}" Text="{x:Static my:Functions.Equal}" />
-            <!--Row 4-->
-            <Button Grid.Row="4" Grid.Column="0" Command="{Binding Commands[NUM]}" CommandParameter="0" Text="0" />
-            <Button Grid.Row="4" Grid.Column="1" Command="{Binding Commands[NUM]}" CommandParameter="{x:Static my:Functions.Dot}" Text="{x:Static my:Functions.Dot}" />
-            <Button Grid.Row="4" Grid.Column="2" Command="{Binding Commands[NUM]}" CommandParameter="{x:Static my:Functions.Delete}" Text="{x:Static my:Functions.Delete}" />
+            <!-- Page0 Functions -->
+            <Button Grid.Row="1" Grid.Column="0" IsVisible="{Binding PageActive[0]}" Command="{Binding Commands[NUM]}" CommandParameter="7" Text="7" />
+            <Button Grid.Row="1" Grid.Column="1" IsVisible="{Binding PageActive[0]}" Command="{Binding Commands[NUM]}" CommandParameter="8" Text="8" />
+            <Button Grid.Row="1" Grid.Column="2" IsVisible="{Binding PageActive[0]}" Command="{Binding Commands[NUM]}" CommandParameter="9" Text="9" />
+            <Button Grid.Row="2" Grid.Column="0" IsVisible="{Binding PageActive[0]}" Command="{Binding Commands[NUM]}" CommandParameter="4" Text="4" />
+            <Button Grid.Row="2" Grid.Column="1" IsVisible="{Binding PageActive[0]}" Command="{Binding Commands[NUM]}" CommandParameter="5" Text="5" />
+            <Button Grid.Row="2" Grid.Column="2" IsVisible="{Binding PageActive[0]}" Command="{Binding Commands[NUM]}" CommandParameter="6" Text="6" />
+            <Button Grid.Row="3" Grid.Column="0" IsVisible="{Binding PageActive[0]}" Command="{Binding Commands[NUM]}" CommandParameter="1" Text="1" />
+            <Button Grid.Row="3" Grid.Column="1" IsVisible="{Binding PageActive[0]}" Command="{Binding Commands[NUM]}" CommandParameter="2" Text="2" />
+            <Button Grid.Row="3" Grid.Column="2" IsVisible="{Binding PageActive[0]}" Command="{Binding Commands[NUM]}" CommandParameter="3" Text="3" />
+            <Button Grid.Row="4" Grid.Column="0" IsVisible="{Binding PageActive[0]}" Command="{Binding Commands[NUM]}" CommandParameter="0" Text="0" />
+            <Button Grid.Row="4" Grid.Column="1" IsVisible="{Binding PageActive[0]}" Command="{Binding Commands[NUM]}" CommandParameter="{x:Static my:Functions.Dot}" Text="{x:Static my:Functions.Dot}" />
+            <Button Grid.Row="4" Grid.Column="2" IsVisible="{Binding PageActive[0]}" Command="{Binding Commands[NUM]}" CommandParameter="{x:Static my:Functions.Delete}" Text="{x:Static my:Functions.Delete}" />
+            <!-- Page1 Functions -->
+            <Button Grid.Row="1" Grid.Column="0" IsVisible="{Binding PageActive[1]}" Command="{Binding Commands[NUM2]}" CommandParameter="{x:Static my:Functions.Sin}" Text="{x:Static my:Functions.Sin}" />
+            <Button Grid.Row="1" Grid.Column="1" IsVisible="{Binding PageActive[1]}" Command="{Binding Commands[NUM2]}" CommandParameter="{x:Static my:Functions.Cos}" Text="{x:Static my:Functions.Cos}" />
+            <Button Grid.Row="1" Grid.Column="2" IsVisible="{Binding PageActive[1]}" Command="{Binding Commands[NUM2]}" CommandParameter="{x:Static my:Functions.Tan}" Text="{x:Static my:Functions.Tan}" />
+            <Button Grid.Row="2" Grid.Column="0" IsVisible="{Binding PageActive[1]}" Command="{Binding Commands[NUM2]}" CommandParameter="{x:Static my:Functions.Log}" Text="{x:Static my:Functions.Log}" />
+            <Button Grid.Row="2" Grid.Column="1" IsVisible="{Binding PageActive[1]}" Command="{Binding Commands[NUM2]}" CommandParameter="{x:Static my:Functions.Ln}" Text="{x:Static my:Functions.Ln}" />
+            <Button Grid.Row="2" Grid.Column="2" IsVisible="{Binding PageActive[1]}" Command="{Binding Commands[NUM2]}" CommandParameter="{x:Static my:Functions.E}" Text="{x:Static my:Functions.E}" />
+            <Button Grid.Row="3" Grid.Column="0" IsVisible="{Binding PageActive[1]}" Command="{Binding Commands[NUM2]}" CommandParameter="{x:Static my:Functions.Factorial}" Text="{x:Static my:Functions.Factorial}" />
+            <Button Grid.Row="3" Grid.Column="1" IsVisible="{Binding PageActive[1]}" Command="{Binding Commands[NUM2]}" CommandParameter="{x:Static my:Functions.Pow}" Text="{x:Static my:Functions.Pow}" />
+            <Button Grid.Row="3" Grid.Column="2" IsVisible="{Binding PageActive[1]}" Command="{Binding Commands[NUM2]}" CommandParameter="{x:Static my:Functions.Root}" Text="{x:Static my:Functions.Root}" />
+            <Button Grid.Row="4" Grid.Column="0" IsVisible="{Binding PageActive[1]}" Command="{Binding Commands[NUM2]}" CommandParameter="{x:Static my:Functions.Pi}" Text="{x:Static my:Functions.Pi}" />
+            <Button Grid.Row="4" Grid.Column="1" IsVisible="{Binding PageActive[1]}" Command="{Binding Commands[NUM2]}" CommandParameter="{x:Static my:Functions.BracketOne}" Text="{x:Static my:Functions.BracketOne}" />
+            <Button Grid.Row="4" Grid.Column="2" IsVisible="{Binding PageActive[1]}" Command="{Binding Commands[NUM2]}" CommandParameter="{x:Static my:Functions.BracketTwo}" Text="{x:Static my:Functions.BracketTwo}" />
         </Grid>
     </Grid>
 </ContentPage>
