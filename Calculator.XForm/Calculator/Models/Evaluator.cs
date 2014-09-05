@@ -29,20 +29,20 @@ namespace Calculator.Models
             // Process each token.
             try
             {
-                foreach (string nextToken in expression.Tokens)
+                foreach (var token in expression.Tokens)
                 {
                     // Does it start with a digit?
-                    if (Char.IsDigit(nextToken[0]))
+                    if (token.Value is String)
                     {
                         // Get the integer value.
-                        double value = Double.Parse(nextToken);
+                        double value = Double.Parse(token.Value as string);
                         // Push value onto operand stack.
                         operandStack.Push(value);
                     } // Is it an operator?
-                    else if (Functions.IsOperator(nextToken))
+                    else if (token.Value is Operator)
                     {
                         // Evaluate the operator.
-                        double res = EvalOp(Functions.GetOperator(nextToken));
+                        double res = EvalOp(token.Value as Operator);
                         // Push result onto the operand stack.
                         operandStack.Push(res);
                     }

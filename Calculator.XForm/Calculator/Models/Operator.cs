@@ -27,6 +27,13 @@ namespace Calculator.Models
 
         public bool CanComeAfter(Operator opp)
         {
+            if (opp == null) // After Num 
+                return type == TermType.Biominal ||
+                       type == TermType.LeftMono;
+            if (opp == Operator.Begin) // First
+                return type == TermType.RightMono ||
+                       type == TermType.None;
+
             if (opp.Type == TermType.None)
                 return true;
 
@@ -61,6 +68,8 @@ namespace Calculator.Models
             set { type = value; }
         }
         #endregion
+
+        public static readonly Operator Begin = new Operator("None"); 
     }
 
     public delegate double Operation(double left, double right);

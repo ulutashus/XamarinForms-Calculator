@@ -1,24 +1,25 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <functions>
   <!-- Operators -->
-  <operator name="Addition" value="+" precedence="1" type="Biominal"></operator>
-  <operator name="Subtraction" value="-" precedence="1" type="Biominal"></operator>
-  <operator name="Multiply" value="*" precedence="2" type="Biominal"></operator>
-  <operator name="Division" value="/" precedence="2" type="Biominal"></operator>
-  <operator name="Sin" value="sin" precedence="3" type="RightMono"></operator>
-  <operator name="Cos" value="cos" precedence="3" type="RightMono"></operator>
-  <operator name="Tan" value="tan" precedence="3" type="RightMono"></operator>
-  <operator name="Ln" value="ln" precedence="3" type="RightMono"></operator>
-  <operator name="Log" value="log" precedence="3" type="RightMono"></operator>
-  <operator name="Factorial" value="!" precedence="4" type="LeftMono"></operator>
-  <operator name="Pow" value="^" precedence="4" type="RightMono"></operator>
-  <operator name="Root" value="√" precedence="4" type="RightMono"></operator>
-  <operator name="BracketOne" value="(" precedence="-1" type="RightMono"></operator>
-  <operator name="BracketTwo" value=")" precedence="-1" type="LeftMono"></operator>
-  <operator name="E" value="e" precedence="5" type="None"></operator>
-  <operator name="Pi" value="π" precedence="5" type="None"></operator>
+  <operator name="Addition" display="+" precedence="1" type="Biominal"></operator>
+  <operator name="Subtraction" display="-" precedence="1" type="Biominal"></operator>
+  <operator name="Multiply" display="*" precedence="2" type="Biominal"></operator>
+  <operator name="Division" display="/" precedence="2" type="Biominal"></operator>
+  <operator name="Minus" display="-" precedence="5" type="RightMono"></operator>
+  <operator name="Sin" display="sin" precedence="3" type="RightMono"></operator>
+  <operator name="Cos" display="cos" precedence="3" type="RightMono"></operator>
+  <operator name="Tan" display="tan" precedence="3" type="RightMono"></operator>
+  <operator name="Ln" display="ln" precedence="3" type="RightMono"></operator>
+  <operator name="Log" display="log" precedence="3" type="RightMono"></operator>
+  <operator name="Factorial" display="!" precedence="4" type="LeftMono"></operator>
+  <operator name="Pow" display="^" precedence="4" type="Biominal"></operator>
+  <operator name="Root" display="√" precedence="4" type="RightMono"></operator>
+  <operator name="BracketOne" display="(" precedence="-1" type="RightMono"></operator>
+  <operator name="BracketTwo" display=")" precedence="-1" type="LeftMono"></operator>
+  <operator name="E" display="e" precedence="5" type="None"></operator>
+  <operator name="Pi" display="π" precedence="5" type="None"></operator>
   <!-- Non Operators -->
-  <function name="Delete" value="Del"></function>
-  <function name="Dot" value="."></function>
-  <function name="Equal" value="="></function>
+  <function name="Delete" display="Del"></function>
+  <function name="Dot" display="."></function>
+  <function name="Equal" display="="></function>
 </functions>

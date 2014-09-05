@@ -9,7 +9,7 @@ namespace Calculator.Models
     public class Function
     {
         public string Name { get; private set; }
-        public string Value { get; set; }
+        public string Display { get; set; }
 
         public Function(string name)
         {
@@ -18,7 +18,7 @@ namespace Calculator.Models
 
         public override string ToString()
         {
-            return Value;
+            return Display;
         }
     }
 }

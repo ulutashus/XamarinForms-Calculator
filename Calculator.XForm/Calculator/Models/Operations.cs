@@ -79,6 +79,11 @@ namespace Calculator.Models
         {
             return Math.PI;
         }
+
+        public static double Minus(double left, double right)
+        {
+            return -right;
+        }
     }
 
 }

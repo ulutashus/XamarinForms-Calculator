@@ -24,58 +24,72 @@ namespace Calculator.Models
 
             foreach (XElement elem in elements)
             {
-                Function func = elem.Name == "function" ?
-                    new Function(elem.Attribute("name").Value)
+                string funcName = elem.Attribute("name").Value;
+                Function func;
+                if( elem.Name == "function" ) 
+                {
+                    func = new Function(funcName)
                     {
-                        Value = elem.Attribute("value").Value
-                    } :
-                    new Operator(elem.Attribute("name").Value)
+                        Display = elem.Attribute("display").Value
+                    };
+                }
+                else
+                {
+                    func = new Operator(funcName)
                     {
-                        Value = elem.Attribute("value").Value,
+                        Display = elem.Attribute("display").Value,
                         Precedence = Int32.Parse(elem.Attribute("precedence").Value),
                         Type = (TermType)Enum.Parse(typeof(TermType), elem.Attribute("type").Value)
                     };
-
-                functions.Add(elem.Attribute("name").Value, func);
+                }
+                functions.Add(funcName, func);
             }
         }
 
-        public static Operator GetOperator(string name)
+        public static Operator GetOperator(string display)
         {
-            var op = functions.Values.FirstOrDefault(p => p is Operator && p.Value == name);
+            var op = functions.Values.FirstOrDefault(p => p is Operator && p.Display == display);
             return op != null ? (Operator)op : null;
         }
 
-        public static bool IsOperator(string name)
+        public static IEnumerable<Operator> GetOperators(string display)
         {
-            var value = functions.FirstOrDefault(p => p.Value.Value == name).Value;
+            var op = functions.Values.
+                Where(p => p is Operator && p.Display == display).
+                Select(p => (Operator)p);
+            return op;
+        }
+
+        public static bool IsOperator(string display)
+        {
+            var value = functions.FirstOrDefault(p => p.Value.Display == display).Value;
             return value != null && value is Operator;
         }
 
         #region Function Properties
-        public static string Addition   { get { return GetValue("Addition"); } }
-        public static string Subtraction{ get { return GetValue("Subtraction"); } }
-        public static string Multiply { get { return GetValue("Multiply"); } }
-        public static string Division { get { return GetValue("Division"); } }
-        public static string Equal { get { return GetValue("Equal"); } }
-        public static string Delete { get { return GetValue("Delete"); } }
-        public static string Dot { get { return GetValue("Dot"); } }
-        public static string Sin { get { return GetValue("Sin"); } }
-        public static string Cos { get { return GetValue("Cos"); } }
-        public static string Tan { get { return GetValue("Tan"); } }
-        public static string Ln { get { return GetValue("Ln"); } }
-        public static string Log { get { return GetValue("Log"); } }
-        public static string Factorial { get { return GetValue("Factorial"); } }
-        public static string Pi { get { return GetValue("Pi"); } }
-        public static string E { get { return GetValue("E"); } }
-        public static string Pow { get { return GetValue("Pow"); } }
-        public static string BracketOne { get { return GetValue("BracketOne"); } }
-        public static string BracketTwo { get { return GetValue("BracketTwo"); } }
-        public static string Root { get { return GetValue("Root"); } }
+        public static string Addition   { get { return GetDisplay("Addition"); } }
+        public static string Subtraction{ get { return GetDisplay("Subtraction"); } }
+        public static string Multiply { get { return GetDisplay("Multiply"); } }
+        public static string Division { get { return GetDisplay("Division"); } }
+        public static string Equal { get { return GetDisplay("Equal"); } }
+        public static string Delete { get { return GetDisplay("Delete"); } }
+        public static string Dot { get { return GetDisplay("Dot"); } }
+        public static string Sin { get { return GetDisplay("Sin"); } }
+        public static string Cos { get { return GetDisplay("Cos"); } }
+        public static string Tan { get { return GetDisplay("Tan"); } }
+        public static string Ln { get { return GetDisplay("Ln"); } }
+        public static string Log { get { return GetDisplay("Log"); } }
+        public static string Factorial { get { return GetDisplay("Factorial"); } }
+        public static string Pi { get { return GetDisplay("Pi"); } }
+        public static string E { get { return GetDisplay("E"); } }
+        public static string Pow { get { return GetDisplay("Pow"); } }
+        public static string BracketOne { get { return GetDisplay("BracketOne"); } }
+        public static string BracketTwo { get { return GetDisplay("BracketTwo"); } }
+        public static string Root { get { return GetDisplay("Root"); } }
 
-        private static string GetValue(string name)
+        private static string GetDisplay(string name)
         {
-            return functions[name].Value;
+            return functions[name].Display;
         }
         #endregion
     }

@@ -21,21 +21,21 @@ namespace Calculator.Models
             try
             {
                 // Process each token in the infix string.
-                foreach (string nextToken in infix.Tokens)
+                foreach (var token in infix.Tokens)
                 {
                     // Is it an operand?
-                    if (Char.IsDigit(nextToken[0]))
+                    if (token.Value is String)
                     {
-                        postfix.AddToken(nextToken);
+                        postfix.AddToken(token.Value);
                     } // Is it an operator?
-                    else if (Functions.IsOperator(nextToken))
+                    else if (token.Value is Operator)
                     {
-                        ProcessOperator(Functions.GetOperator(nextToken));
+                        ProcessOperator(token.Value as Operator);
                     }
                     else
                     {
                         throw new Exception("Unexpected Character Encountered: "
-                             + nextToken);
+                             + token.Value);
                     }
                 } 
                 // Pop any remaining operators
@@ -59,7 +59,7 @@ namespace Calculator.Models
 
         private static void ProcessOperator(Operator op)
         {
-            if (operatorStack.Count == 0 || op.Value == Functions.BracketOne)
+            if (operatorStack.Count == 0 || op.Display == Functions.BracketOne)
             {
                 operatorStack.Push(op);
             }
@@ -80,7 +80,7 @@ namespace Calculator.Models
                            && op.Precedence <= topOp.Precedence)
                     {
                         operatorStack.Pop();
-                        if (topOp.Value == Functions.BracketOne)
+                        if (topOp.Display == Functions.BracketOne)
                         {
                             // Matching '(' popped - exit loop.
                             break;
@@ -96,7 +96,7 @@ namespace Calculator.Models
                     // assert: Operator stack is empty or
                     //         current operator precedence >
                     //         top of stack operator precedence.
-                    if (op.Value != Functions.BracketTwo)
+                    if (op.Display != Functions.BracketTwo)
                         operatorStack.Push(op);
                 }
             }
